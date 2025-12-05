@@ -9,9 +9,14 @@ GENERATE_TYPE_MAP = {
   "image": resize_image_by_percent,
 }
 
-# TODO: come up with a callable function for when this is included in other repos
-# def generate(type, size, out):
-  
+def generate(generateType, directory, *args):
+  if generateType not in GENERATE_TYPE_MAP:
+    raise ValueError(f"Unknown generate type: {generateType}")
+
+  for size in SIZES:
+    img = GENERATE_TYPE_MAP[generateType](size, *args)
+    folder = getFolder(directory, size, "drawables")
+    img.save(folder + f"{generateType}.png")
 
 if __name__ == "__main__":
   if len(sys.argv) < 3:
@@ -20,7 +25,4 @@ if __name__ == "__main__":
   
   generateType = sys.argv[1]
   params = sys.argv[2:]
-  for size in SIZES:
-    img = GENERATE_TYPE_MAP[generateType](size, *params)
-    folder = getFolder(size, "drawables")
-    img.save(folder + f"{generateType}.png")
+  generate(generateType, 'out', *params)
