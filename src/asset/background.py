@@ -1,6 +1,6 @@
 import math
 from PIL import Image
-from color import convert_hex_to_rgb
+from ..color import convert_hex_to_rgb
 
 # generates a bowtie gradient background image at specified pixels
 def generate_bowtie_gradient_background(size, backgroundColor, backgroundSecondaryColor):
