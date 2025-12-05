@@ -1,24 +1,9 @@
-import sys
 import math
 from PIL import Image
-from size import SIZES
-from files import getFolder
-
-
-def convert_hex_to_rgb(hex_color):
-  """Converts a hex color string (e.g., "#RRGGBB" or "0xRRGGBB") to an RGB tuple."""
-  if (hex_color.startswith('0x')):
-    hex_color = hex_color[2:]
-  elif (hex_color.startswith('#')):
-    hex_color = hex_color[1:]
-  r = int(hex_color[0:2], 16)
-  g = int(hex_color[2:4], 16)
-  b = int(hex_color[4:6], 16)
-
-  return (r, g, b)
+from color import convert_hex_to_rgb
 
 # generates a bowtie gradient background image at specified pixels
-def create_background(backgroundColor, backgroundSecondaryColor, size=1000):
+def generate_bowtie_gradient_background(size, backgroundColor, backgroundSecondaryColor):
   """Creates a gradient that wraps around the center point twice (bowtie pattern)"""
   img = Image.new('RGB', (size, size))
   pixels = img.load()
@@ -58,19 +43,3 @@ def create_background(backgroundColor, backgroundSecondaryColor, size=1000):
   
   return img
 
-# create_background("#550000", "#AA0000").save("background.png")
-# create_background("#555555", "#ffffff").save("background.png")
-
-
-if __name__ == "__main__":
-  if len(sys.argv) < 3:
-    print("Usage: python3 ./src/background.py <backgroundColor> <backgroundSecondaryColor>")
-    sys.exit(1)
-  
-  backgroundColor = sys.argv[1]
-  backgroundSecondaryColor = sys.argv[2]
-  
-  for size in SIZES:
-    img = create_background(backgroundColor, backgroundSecondaryColor, size)
-    folder = getFolder(size, "drawables")
-    img.save(folder + "background.png")
