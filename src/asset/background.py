@@ -43,3 +43,30 @@ def generate_bowtie_gradient_background(size, backgroundColor, backgroundSeconda
   
   return img
 
+def generate_radial_gradient_background(size, backgroundColor, backgroundSecondaryColor):
+  """Creates a radial gradient background image"""
+  img = Image.new('RGB', (size, size))
+  pixels = img.load()
+  
+  center = size / 2  
+  backgroundColor = convert_hex_to_rgb(backgroundColor)
+  backgroundSecondaryColor = convert_hex_to_rgb(backgroundSecondaryColor)
+  
+  for y in range(size):
+    for x in range(size):
+      angle = math.atan2(y - center, x - center) + math.pi / 4
+      # Normalize angle to be between 0 and pi
+      angle = (angle + math.pi) % math.pi
+      
+      color_percent = (-math.pi * angle * (angle - math.pi)) / 4
+      
+      # Interpolate between colors based on angle
+      r = int(backgroundColor[0] * (1 - color_percent) + backgroundSecondaryColor[0] * color_percent)
+      g = int(backgroundColor[1] * (1 - color_percent) + backgroundSecondaryColor[1] * color_percent)
+      b = int(backgroundColor[2] * (1 - color_percent) + backgroundSecondaryColor[2] * color_percent)
+
+      pixels[x, y] = (r, g, b)
+      
+
+  
+  return img

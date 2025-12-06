@@ -1,11 +1,12 @@
 import sys
-from .asset.background import generate_bowtie_gradient_background
+from .asset.background import generate_bowtie_gradient_background, generate_radial_gradient_background
 from .asset.image import resize_image_by_percent
 from .size import SIZES
 from .files import getFolder
 
 GENERATE_TYPE_MAP = {
   "background": generate_bowtie_gradient_background,
+  "radial_background": generate_radial_gradient_background,
   "image": resize_image_by_percent,
 }
 
