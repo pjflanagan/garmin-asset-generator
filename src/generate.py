@@ -10,11 +10,11 @@ GENERATE_TYPE_MAP = {
   "image": resize_image_by_percent,
 }
 
-def generate(generateType, directory, *args):
+def generate(generateType, directory, name, *args):
   if generateType not in GENERATE_TYPE_MAP:
     raise ValueError(f"Unknown generate type: {generateType}")
 
   for size in SIZES:
     img = GENERATE_TYPE_MAP[generateType](size, *args)
     folder = getFolder(directory, size, "drawables")
-    img.save(folder + f"{generateType}.png")
+    img.save(folder + f"{name}.png")
